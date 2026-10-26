@@ -1,10 +1,20 @@
 /**
  * Military Identification & Memorization App (Russia & China)
- * Material Design 3 Edition
+ * Material Design 3 (M3) Official Specification
+ * Strictly NO EMOJIS.
  */
 
 (function () {
   'use strict';
+
+  // --- Category Icon Map (Material Symbols) ---
+  const CATEGORY_ICONS = {
+    'aircraft': 'flight',
+    'firearm': 'shield',
+    'artillery': 'adjust',
+    'missile': 'rocket_launch',
+    'bomb': 'crisis_alert'
+  };
 
   // --- State Variables ---
   let weapons = typeof WEAPONS_DATA !== 'undefined' ? WEAPONS_DATA : [];
@@ -25,13 +35,13 @@
   let quizAnswered = false;
 
   // LocalStorage Key
-  const STORAGE_KEY = 'military_id_progress_v2';
+  const STORAGE_KEY = 'military_id_progress_m3';
   let progressData = loadProgress();
 
   // --- DOM Elements ---
   const countryChipsContainer = document.getElementById('country-chips');
   const categoryChipsContainer = document.getElementById('category-chips');
-  const navTabBtns = document.querySelectorAll('.nav-tab-btn');
+  const navItems = document.querySelectorAll('.nav-item');
 
   const flashcardView = document.getElementById('flashcard-view');
   const quizView = document.getElementById('quiz-view');
@@ -101,13 +111,26 @@
   const modalLicense = document.getElementById('modal-license');
   const modalWikiLink = document.getElementById('modal-wiki-link');
 
+  // Mobile Modal Elements
+  const btnMobileConnect = document.getElementById('btn-mobile-connect');
+  const mobileModal = document.getElementById('mobile-connect-modal');
+  const mobileModalCloseBtn = document.getElementById('mobile-modal-close-btn');
+  const mobileQrImg = document.getElementById('mobile-qr-img');
+  const mobileUrlText = document.getElementById('mobile-url-text');
+  const btnApkDownloadLink = document.getElementById('btn-apk-download-link');
+  const btnQrShowWeb = document.getElementById('btn-qr-show-web');
+  const btnQrShowApk = document.getElementById('btn-qr-show-apk');
+
+  let currentTargetWebUrl = '';
+  let currentTargetApkUrl = '';
+
   // --- LocalStorage Management ---
   function loadProgress() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       return saved ? JSON.parse(saved) : {};
     } catch (e) {
-      console.warn('Could not load localStorage progress:', e);
+      console.warn('Could not load progress:', e);
       return {};
     }
   }
@@ -116,7 +139,7 @@
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(progressData));
     } catch (e) {
-      console.warn('Could not save localStorage progress:', e);
+      console.warn('Could not save progress:', e);
     }
   }
 
@@ -141,11 +164,8 @@
   // --- Filtering Logic ---
   function applyFilters() {
     filteredWeapons = weapons.filter(w => {
-      // Country Filter
       if (selectedCountry !== 'all' && w.country !== selectedCountry) return false;
-      // Category Filter
       if (selectedCategory !== 'all' && w.category !== selectedCategory) return false;
-      // Weak Only Filter
       if (onlyWeak) {
         const s = getItemStatus(w.id);
         if (s !== 'learning') return false;
@@ -167,7 +187,7 @@
   }
 
   function updateFilterLabels() {
-    let countryTxt = selectedCountry === 'all' ? '🇷🇺 ロシア & 🇨🇳 中国' : (selectedCountry === 'russia' ? '🇷🇺 ロシア' : '🇨🇳 中国');
+    let countryTxt = selectedCountry === 'all' ? 'ロシア & 中国' : (selectedCountry === 'russia' ? 'ロシア' : '中国');
     let categoryMap = {
       'all': 'すべて',
       'aircraft': '戦闘機・航空機',
@@ -177,7 +197,7 @@
       'bomb': '爆弾'
     };
     let catTxt = categoryMap[selectedCategory] || 'すべて';
-    if (onlyWeak) catTxt += ' [苦手特訓中]';
+    if (onlyWeak) catTxt += ' [要復習特訓]';
     currentFilterLabelEl.textContent = `${countryTxt} ・ ${catTxt}`;
   }
 
@@ -195,8 +215,8 @@
   function renderFlashcard() {
     if (filteredWeapons.length === 0) {
       cardFrontImg.src = '';
-      frontCountryBadge.textContent = 'なし';
-      frontCategoryBadge.textContent = '対象データなし';
+      frontCountryBadge.innerHTML = '<span class="material-symbols-outlined">info</span><span class="badge-text">なし</span>';
+      frontCategoryBadge.innerHTML = '<span class="material-symbols-outlined">info</span><span class="badge-text">対象なし</span>';
       cardIndexEl.textContent = '0';
       cardTotalEl.textContent = '0';
       backWeaponName.textContent = '該当する兵器がありません';
@@ -213,19 +233,18 @@
     cardIndexEl.textContent = currentCardIndex + 1;
     cardTotalEl.textContent = filteredWeapons.length;
 
-    // Reset Flip
     isCardFlipped = false;
     flashcardWrapper.classList.remove('flipped');
 
     // Front View
     cardFrontImg.src = w.image_url || '';
     cardFrontImg.onerror = function () {
-      this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="%23f1f5f9"/><text x="50%" y="50%" fill="%2364748b" font-size="16" font-family="sans-serif" text-anchor="middle" dominant-baseline="middle">画像読み込み中 / 未取得</text></svg>';
+      this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="%23eff2f3"/><text x="50%" y="50%" fill="%2372787e" font-size="15" font-family="sans-serif" text-anchor="middle" dominant-baseline="middle">画像読込中 / 未取得</text></svg>';
     };
 
-    frontCountryBadge.textContent = w.country_label;
-    frontCountryBadge.className = `badge-tag ${w.country}`;
-    frontCategoryBadge.textContent = w.category_label;
+    frontCountryBadge.innerHTML = `<span class="material-symbols-outlined">flag</span><span class="badge-text">${w.country_label}</span>`;
+    const catIcon = CATEGORY_ICONS[w.category] || 'category';
+    frontCategoryBadge.innerHTML = `<span class="material-symbols-outlined">${catIcon}</span><span class="badge-text">${w.category_label}</span>`;
 
     // Back View
     backWeaponName.textContent = w.name_ja;
@@ -270,7 +289,6 @@
     let status = 'learning';
     if (rating === 'again') {
       status = 'learning';
-      // 学習中のアイテムは数問後に再出題されるように近くに再挿入
       if (filteredWeapons.length > 3) {
         filteredWeapons.splice(currentCardIndex + 3, 0, w);
       }
@@ -282,46 +300,37 @@
 
     setItemStatus(w.id, status);
 
-    // 次のカードへ
     currentCardIndex = (currentCardIndex + 1) % filteredWeapons.length;
     renderFlashcard();
   }
 
   // --- MODE 2: Quiz Logic ---
   function startNextQuizQuestion() {
-    if (filteredWeapons.length < 4) {
-      // フィルター条件で選択肢が足りない場合は全体から補完
-      if (weapons.length < 4) return;
-    }
+    if (filteredWeapons.length < 4 && weapons.length < 4) return;
 
     quizAnswered = false;
     quizFeedback.classList.remove('show');
 
-    // 1問をランダム選出
     const sourceList = filteredWeapons.length >= 4 ? filteredWeapons : weapons;
     const correctIdx = Math.floor(Math.random() * sourceList.length);
     quizCurrentWeapon = sourceList[correctIdx];
 
-    // ダミー3問を選出（同カテゴリまたは同国を優先）
     let candidates = weapons.filter(w => w.id !== quizCurrentWeapon.id);
     let sameCatCandidates = candidates.filter(w => w.category === quizCurrentWeapon.category);
     let pool = sameCatCandidates.length >= 3 ? sameCatCandidates : candidates;
     
-    // シャッフルして3つ選ぶ
     pool = [...pool].sort(() => 0.5 - Math.random());
     const dummies = pool.slice(0, 3);
 
     quizOptions = [quizCurrentWeapon, ...dummies].sort(() => 0.5 - Math.random());
 
-    // 設問UI反映
-    quizCountryBadge.textContent = quizCurrentWeapon.country_label;
-    quizCountryBadge.className = `badge-tag ${quizCurrentWeapon.country}`;
-    quizCategoryBadge.textContent = quizCurrentWeapon.category_label;
+    quizCountryBadge.innerHTML = `<span class="material-symbols-outlined">flag</span><span class="badge-text">${quizCurrentWeapon.country_label}</span>`;
+    const qCatIcon = CATEGORY_ICONS[quizCurrentWeapon.category] || 'category';
+    quizCategoryBadge.innerHTML = `<span class="material-symbols-outlined">${qCatIcon}</span><span class="badge-text">${quizCurrentWeapon.category_label}</span>`;
     quizImage.src = quizCurrentWeapon.image_url || '';
 
-    // 選択肢ボタン生成
     quizOptionsContainer.innerHTML = '';
-    quizOptions.forEach((opt, idx) => {
+    quizOptions.forEach((opt) => {
       const btn = document.createElement('button');
       btn.className = 'quiz-option-btn';
       btn.innerHTML = `
@@ -346,13 +355,11 @@
       
       quizFeedback.className = 'quiz-feedback-box is-correct show';
       quizFeedbackIcon.textContent = 'check_circle';
-      quizFeedbackIcon.style.color = '#10b981';
-      quizFeedbackText.textContent = '正解！素晴らしい！';
+      quizFeedbackText.textContent = '正解';
     } else {
       clickedBtn.classList.add('wrong');
       setItemStatus(quizCurrentWeapon.id, 'learning');
 
-      // 正解ボタンをハイライト
       const allBtns = quizOptionsContainer.querySelectorAll('.quiz-option-btn');
       allBtns.forEach((btn, idx) => {
         if (quizOptions[idx].id === quizCurrentWeapon.id) {
@@ -362,8 +369,7 @@
 
       quizFeedback.className = 'quiz-feedback-box is-wrong show';
       quizFeedbackIcon.textContent = 'cancel';
-      quizFeedbackIcon.style.color = '#f43f5e';
-      quizFeedbackText.textContent = `惜しい！ 正解は【${quizCurrentWeapon.name_ja}】`;
+      quizFeedbackText.textContent = `正解: ${quizCurrentWeapon.name_ja}`;
     }
 
     quizScoreVal.textContent = quizScore;
@@ -371,10 +377,9 @@
 
     quizFeedbackAppearance.innerHTML = `
       <strong>見た目の識別ポイント:</strong> ${quizCurrentWeapon.appearance}<br>
-      <span style="font-size:0.8rem; color:var(--md-sys-color-on-surface-variant);">${quizCurrentWeapon.features?.[0] || ''}</span>
+      <span style="font-size:0.8125rem; color:var(--md-sys-color-on-surface-variant);">${quizCurrentWeapon.features?.[0] || ''}</span>
     `;
 
-    // 選択肢ボタンを無効化
     const allBtns = quizOptionsContainer.querySelectorAll('.quiz-option-btn');
     allBtns.forEach(btn => btn.disabled = true);
   }
@@ -401,13 +406,20 @@
       const card = document.createElement('div');
       card.className = 'gallery-card';
       const status = getItemStatus(w.id);
+      const gCatIcon = CATEGORY_ICONS[w.category] || 'category';
 
       card.innerHTML = `
         <div class="gallery-card-img">
           <div class="gallery-status-indicator ${status}" title="学習状態: ${status}"></div>
           <div class="card-badges" style="top:8px; left:8px;">
-            <span class="badge-tag ${w.country}" style="padding:2px 6px; font-size:0.7rem;">${w.country_label}</span>
-            <span class="badge-tag category" style="padding:2px 6px; font-size:0.7rem;">${w.category_label}</span>
+            <span class="m3-badge-chip" style="height:24px; font-size:0.6875rem;">
+              <span class="material-symbols-outlined" style="font-size:14px;">flag</span>
+              <span>${w.country_label}</span>
+            </span>
+            <span class="m3-badge-chip" style="height:24px; font-size:0.6875rem;">
+              <span class="material-symbols-outlined" style="font-size:14px;">${gCatIcon}</span>
+              <span>${w.category_label}</span>
+            </span>
           </div>
           <img src="${w.image_url || ''}" alt="${w.name_ja}" loading="lazy">
         </div>
@@ -450,18 +462,17 @@
     document.getElementById('stat-weak-count').textContent = learningCount;
     document.getElementById('stat-overall-percent').textContent = overallPct + '%';
 
-    // Breakdown by Country & Category
     const breakdownContainer = document.getElementById('stats-breakdown-container');
     breakdownContainer.innerHTML = '';
 
     const groups = [
-      { label: '🇷🇺 ロシア 全体', filter: w => w.country === 'russia' },
-      { label: '🇨🇳 中国 全体', filter: w => w.country === 'china' },
-      { label: '✈️ 戦闘機・航空機 (RU/CN)', filter: w => w.category === 'aircraft' },
-      { label: '🔫 火器・小火器 (RU/CN)', filter: w => w.category === 'firearm' },
-      { label: '💥 火砲・自走砲 (RU/CN)', filter: w => w.category === 'artillery' },
-      { label: '🚀 ミサイル (RU/CN)', filter: w => w.category === 'missile' },
-      { label: '💣 爆弾 (RU/CN)', filter: w => w.category === 'bomb' }
+      { label: 'ロシア 全体', filter: w => w.country === 'russia' },
+      { label: '中国 全体', filter: w => w.country === 'china' },
+      { label: '戦闘機・航空機', filter: w => w.category === 'aircraft' },
+      { label: '火器・小火器', filter: w => w.category === 'firearm' },
+      { label: '火砲・自走砲', filter: w => w.category === 'artillery' },
+      { label: 'ミサイル', filter: w => w.category === 'missile' },
+      { label: '爆弾', filter: w => w.category === 'bomb' }
     ];
 
     groups.forEach(g => {
@@ -477,7 +488,7 @@
       row.innerHTML = `
         <div class="breakdown-row-header">
           <span>${g.label}</span>
-          <span style="font-family:var(--font-mono);">${subMastered} / ${subTotal} (${subPct}%)</span>
+          <span style="font-family:var(--font-family-mono);">${subMastered} / ${subTotal} (${subPct}%)</span>
         </div>
         <div class="m3-progress-track">
           <div class="m3-progress-bar" style="width: ${subPct}%;"></div>
@@ -490,9 +501,9 @@
   // --- Modal Detail Popup ---
   function openModal(w) {
     modalImg.src = w.image_url || '';
-    modalCountryBadge.textContent = w.country_label;
-    modalCountryBadge.className = `badge-tag ${w.country}`;
-    modalCategoryBadge.textContent = w.category_label;
+    modalCountryBadge.innerHTML = `<span class="material-symbols-outlined">flag</span><span class="badge-text">${w.country_label}</span>`;
+    const mCatIcon = CATEGORY_ICONS[w.category] || 'category';
+    modalCategoryBadge.innerHTML = `<span class="material-symbols-outlined">${mCatIcon}</span><span class="badge-text">${w.category_label}</span>`;
 
     modalName.textContent = w.name_ja;
     modalSub.textContent = `${w.name_en} ・ `;
@@ -528,14 +539,39 @@
     modalBackdrop.classList.remove('open');
   }
 
+  // --- Mobile Modal ---
+  function openMobileModal() {
+    let host = window.location.hostname;
+    let port = window.location.port || '8080';
+    if (host === 'localhost' || host === '127.0.0.1' || !host) {
+      host = '192.168.0.192';
+    }
+    currentTargetWebUrl = `http://${host}:${port}/index.html`;
+    currentTargetApkUrl = `http://${host}:${port}/military-id-app.apk`;
+    
+    mobileUrlText.textContent = currentTargetWebUrl;
+    if (btnApkDownloadLink) btnApkDownloadLink.href = currentTargetApkUrl;
+    
+    setQrUrl(currentTargetWebUrl);
+    mobileModal.classList.add('open');
+  }
+
+  function setQrUrl(url) {
+    mobileQrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
+  }
+
+  function closeMobileModal() {
+    mobileModal.classList.remove('open');
+  }
+
   // --- Event Listeners ---
 
-  // Navigation Tabs
-  navTabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      navTabBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentMode = btn.dataset.mode;
+  // Navigation Items (M3 Navigation Bar)
+  navItems.forEach(item => {
+    item.addEventListener('click', () => {
+      navItems.forEach(b => b.classList.remove('active'));
+      item.classList.add('active');
+      currentMode = item.dataset.mode;
 
       flashcardView.style.display = currentMode === 'flashcard' ? 'flex' : 'none';
       quizView.style.display = currentMode === 'quiz' ? 'flex' : 'none';
@@ -546,21 +582,21 @@
     });
   });
 
-  // Country Chips
+  // Country Filter Chips
   countryChipsContainer.addEventListener('click', e => {
-    const chip = e.target.closest('.m3-chip');
+    const chip = e.target.closest('.m3-filter-chip');
     if (!chip) return;
-    countryChipsContainer.querySelectorAll('.m3-chip').forEach(c => c.classList.remove('active'));
+    countryChipsContainer.querySelectorAll('.m3-filter-chip').forEach(c => c.classList.remove('active'));
     chip.classList.add('active');
     selectedCountry = chip.dataset.country;
     applyFilters();
   });
 
-  // Category Chips
+  // Category Filter Chips
   categoryChipsContainer.addEventListener('click', e => {
-    const chip = e.target.closest('.m3-chip');
+    const chip = e.target.closest('.m3-filter-chip');
     if (!chip) return;
-    categoryChipsContainer.querySelectorAll('.m3-chip').forEach(c => c.classList.remove('active'));
+    categoryChipsContainer.querySelectorAll('.m3-filter-chip').forEach(c => c.classList.remove('active'));
     chip.classList.add('active');
     selectedCategory = chip.dataset.category;
     applyFilters();
@@ -594,8 +630,8 @@
 
   btnWeakOnly.addEventListener('click', () => {
     onlyWeak = !onlyWeak;
-    btnWeakOnly.style.backgroundColor = onlyWeak ? '#f43f5e' : '';
-    btnWeakOnly.style.color = onlyWeak ? '#ffffff' : '';
+    btnWeakOnly.style.backgroundColor = onlyWeak ? 'var(--md-state-learning-container)' : '';
+    btnWeakOnly.style.color = onlyWeak ? 'var(--md-state-learning-on-container)' : '';
     applyFilters();
   });
 
@@ -619,45 +655,19 @@
     if (e.target === modalBackdrop) closeModal();
   });
 
-  // Mobile Modal Elements
-  const btnMobileConnect = document.getElementById('btn-mobile-connect');
-  const mobileModal = document.getElementById('mobile-connect-modal');
-  const mobileModalCloseBtn = document.getElementById('mobile-modal-close-btn');
-  const mobileQrImg = document.getElementById('mobile-qr-img');
-  const mobileUrlText = document.getElementById('mobile-url-text');
-  const btnApkDownloadLink = document.getElementById('btn-apk-download-link');
-  const btnQrShowWeb = document.getElementById('btn-qr-show-web');
-  const btnQrShowApk = document.getElementById('btn-qr-show-apk');
-
-  let currentTargetWebUrl = '';
-  let currentTargetApkUrl = '';
-
-  function openMobileModal() {
-    let host = window.location.hostname;
-    let port = window.location.port || '8080';
-    // localhostや127.0.0.1の場合はPCのWi-FiローカルIPアドレスを使用
-    if (host === 'localhost' || host === '127.0.0.1' || !host) {
-      host = '192.168.0.192';
-    }
-    currentTargetWebUrl = `http://${host}:${port}/index.html`;
-    currentTargetApkUrl = `http://${host}:${port}/military-id-app.apk`;
-    
-    mobileUrlText.textContent = currentTargetWebUrl;
-    if (btnApkDownloadLink) btnApkDownloadLink.href = currentTargetApkUrl;
-    
-    // デフォルトはWeb版QR
-    setQrUrl(currentTargetWebUrl);
-    mobileModal.classList.add('open');
-  }
-
-  function setQrUrl(url) {
-    mobileQrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(url)}`;
+  // Mobile Modal Events
+  if (btnMobileConnect) btnMobileConnect.addEventListener('click', openMobileModal);
+  if (mobileModalCloseBtn) mobileModalCloseBtn.addEventListener('click', closeMobileModal);
+  if (mobileModal) {
+    mobileModal.addEventListener('click', e => {
+      if (e.target === mobileModal) closeMobileModal();
+    });
   }
 
   if (btnQrShowWeb) {
     btnQrShowWeb.addEventListener('click', () => {
       setQrUrl(currentTargetWebUrl);
-      btnQrShowWeb.style.borderColor = '#38bdf8';
+      btnQrShowWeb.style.borderColor = 'var(--md-sys-color-primary)';
       if (btnQrShowApk) btnQrShowApk.style.borderColor = '';
     });
   }
@@ -665,20 +675,8 @@
   if (btnQrShowApk) {
     btnQrShowApk.addEventListener('click', () => {
       setQrUrl(currentTargetApkUrl);
-      btnQrShowApk.style.borderColor = '#10b981';
+      btnQrShowApk.style.borderColor = 'var(--md-sys-color-primary)';
       if (btnQrShowWeb) btnQrShowWeb.style.borderColor = '';
-    });
-  }
-
-  function closeMobileModal() {
-    mobileModal.classList.remove('open');
-  }
-
-  if (btnMobileConnect) btnMobileConnect.addEventListener('click', openMobileModal);
-  if (mobileModalCloseBtn) mobileModalCloseBtn.addEventListener('click', closeMobileModal);
-  if (mobileModal) {
-    mobileModal.addEventListener('click', e => {
-      if (e.target === mobileModal) closeMobileModal();
     });
   }
 
@@ -729,7 +727,7 @@
     }
   }, { passive: true });
 
-  // --- Initial Start ---
+  // Initial Start
   applyFilters();
 
 })();

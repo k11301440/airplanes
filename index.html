@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>現代兵器識別暗記 - ロシア & 中国 (Material Design 3)</title>
+  <title>現代兵器識別暗記 (Material Design 3)</title>
   
-  <!-- Google Fonts: Noto Sans JP, Roboto, JetBrains Mono -->
+  <!-- Google Fonts: Roboto & Noto Sans JP -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   
   <!-- Material Symbols Outlined -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   
-  <!-- Custom CSS -->
+  <!-- Custom M3 CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Top App Bar -->
+  <!-- M3 Small Top App Bar -->
   <header class="top-app-bar">
     <div class="brand-section">
-      <div class="brand-icon">
+      <div class="brand-avatar">
         <span class="material-symbols-outlined">radar</span>
       </div>
       <div>
@@ -32,62 +32,78 @@
       </div>
     </div>
 
-    <!-- Navigation Tabs (M3 Segmented) -->
-    <nav class="nav-tabs" role="tablist">
-      <button class="nav-tab-btn active" data-mode="flashcard" role="tab" aria-selected="true">
-        <span class="material-symbols-outlined">style</span>
-        <span>暗記カード</span>
-      </button>
-      <button class="nav-tab-btn" data-mode="quiz" role="tab" aria-selected="false">
-        <span class="material-symbols-outlined">quiz</span>
-        <span>4択テスト</span>
-      </button>
-      <button class="nav-tab-btn" data-mode="gallery" role="tab" aria-selected="false">
-        <span class="material-symbols-outlined">grid_view</span>
-        <span>図鑑一覧</span>
-      </button>
-      <button class="nav-tab-btn" data-mode="stats" role="tab" aria-selected="false">
-        <span class="material-symbols-outlined">insights</span>
-        <span>学習統計</span>
-      </button>
-    </nav>
-
     <!-- Header Actions -->
     <div class="header-actions">
-      <button id="btn-mobile-connect" class="icon-btn" title="スマホで接続 (QRコード)">
+      <button id="btn-mobile-connect" class="icon-btn" title="モバイル連携">
         <span class="material-symbols-outlined">smartphone</span>
       </button>
-      <button id="btn-shuffle" class="icon-btn" title="カードをシャッフル (R)">
+      <button id="btn-shuffle" class="icon-btn" title="シャッフル (キー: R)">
         <span class="material-symbols-outlined">shuffle</span>
       </button>
-      <button id="btn-weak-only" class="icon-btn" title="苦手な兵器のみ特訓">
+      <button id="btn-weak-only" class="icon-btn" title="要復習のみ抽出">
         <span class="material-symbols-outlined">priority_high</span>
       </button>
-      <button id="btn-reset-data" class="icon-btn" title="進捗データをリセット">
+      <button id="btn-reset-data" class="icon-btn" title="進捗リセット">
         <span class="material-symbols-outlined">restart_alt</span>
       </button>
     </div>
   </header>
 
+  <!-- M3 Navigation Bar (Desktop & Mobile) -->
+  <nav class="navigation-bar" role="navigation" aria-label="メインナビゲーション">
+    <div class="nav-items-container">
+      <button class="nav-item active" data-mode="flashcard" role="tab" aria-selected="true">
+        <div class="nav-indicator">
+          <span class="material-symbols-outlined">style</span>
+        </div>
+        <span class="nav-label">暗記カード</span>
+      </button>
+      <button class="nav-item" data-mode="quiz" role="tab" aria-selected="false">
+        <div class="nav-indicator">
+          <span class="material-symbols-outlined">quiz</span>
+        </div>
+        <span class="nav-label">4択テスト</span>
+      </button>
+      <button class="nav-item" data-mode="gallery" role="tab" aria-selected="false">
+        <div class="nav-indicator">
+          <span class="material-symbols-outlined">grid_view</span>
+        </div>
+        <span class="nav-label">兵器図鑑</span>
+      </button>
+      <button class="nav-item" data-mode="stats" role="tab" aria-selected="false">
+        <div class="nav-indicator">
+          <span class="material-symbols-outlined">insights</span>
+        </div>
+        <span class="nav-label">学習統計</span>
+      </button>
+    </div>
+  </nav>
+
   <!-- Main Content Container -->
   <main class="main-content">
     
-    <!-- Filter Section (国 & 類別フィルター) -->
-    <section class="filter-bar" aria-label="兵器フィルター">
+    <!-- M3 Filter Section -->
+    <section class="filter-card" aria-label="絞り込みフィルター">
       <!-- 国選択 -->
       <div class="filter-row">
         <span class="filter-label">所属国</span>
         <div class="chip-group" id="country-chips">
-          <button class="m3-chip active" data-country="all">
+          <button class="m3-filter-chip active" data-country="all">
+            <span class="material-symbols-outlined chip-icon">public</span>
+            <span class="material-symbols-outlined chip-check">check</span>
             <span>すべて</span>
             <span class="chip-count" id="count-country-all">0</span>
           </button>
-          <button class="m3-chip" data-country="russia">
-            <span>🇷🇺 ロシア</span>
+          <button class="m3-filter-chip" data-country="russia">
+            <span class="material-symbols-outlined chip-icon">flag</span>
+            <span class="material-symbols-outlined chip-check">check</span>
+            <span>ロシア</span>
             <span class="chip-count" id="count-country-ru">0</span>
           </button>
-          <button class="m3-chip" data-country="china">
-            <span>🇨🇳 中国</span>
+          <button class="m3-filter-chip" data-country="china">
+            <span class="material-symbols-outlined chip-icon">flag</span>
+            <span class="material-symbols-outlined chip-check">check</span>
+            <span>中国</span>
             <span class="chip-count" id="count-country-cn">0</span>
           </button>
         </div>
@@ -97,12 +113,36 @@
       <div class="filter-row">
         <span class="filter-label">類別</span>
         <div class="chip-group" id="category-chips">
-          <button class="m3-chip active" data-category="all">すべて</button>
-          <button class="m3-chip" data-category="aircraft">✈️ 戦闘機・航空機</button>
-          <button class="m3-chip" data-category="firearm">🔫 火器・小火器</button>
-          <button class="m3-chip" data-category="artillery">💥 火砲・自走砲</button>
-          <button class="m3-chip" data-category="missile">🚀 ミサイル</button>
-          <button class="m3-chip" data-category="bomb">💣 爆弾</button>
+          <button class="m3-filter-chip active" data-category="all">
+            <span class="material-symbols-outlined chip-icon">category</span>
+            <span class="material-symbols-outlined chip-check">check</span>
+            <span>すべて</span>
+          </button>
+          <button class="m3-filter-chip" data-category="aircraft">
+            <span class="material-symbols-outlined chip-icon">flight</span>
+            <span class="material-symbols-outlined chip-check">check</span>
+            <span>戦闘機・航空機</span>
+          </button>
+          <button class="m3-filter-chip" data-category="firearm">
+            <span class="material-symbols-outlined chip-icon">shield</span>
+            <span class="material-symbols-outlined chip-check">check</span>
+            <span>火器・小火器</span>
+          </button>
+          <button class="m3-filter-chip" data-category="artillery">
+            <span class="material-symbols-outlined chip-icon">adjust</span>
+            <span class="material-symbols-outlined chip-check">check</span>
+            <span>火砲・自走砲</span>
+          </button>
+          <button class="m3-filter-chip" data-category="missile">
+            <span class="material-symbols-outlined chip-icon">rocket_launch</span>
+            <span class="material-symbols-outlined chip-check">check</span>
+            <span>ミサイル</span>
+          </button>
+          <button class="m3-filter-chip" data-category="bomb">
+            <span class="material-symbols-outlined chip-icon">crisis_alert</span>
+            <span class="material-symbols-outlined chip-check">check</span>
+            <span>爆弾</span>
+          </button>
         </div>
       </div>
     </section>
@@ -114,14 +154,14 @@
       <!-- Status Counter -->
       <div class="card-header-status">
         <div class="filter-summary">
-          <span id="current-filter-label">🇷🇺 ロシア & 🇨🇳 中国 ・ すべて</span>
+          <span id="current-filter-label">ロシア & 中国 ・ すべて</span>
         </div>
         <div class="progress-counter">
           <span id="card-index">1</span> / <span id="card-total">54</span>
         </div>
       </div>
 
-      <!-- 3D Flip Card -->
+      <!-- M3 3D Flip Card -->
       <div class="flashcard-wrapper" id="flashcard-wrapper" title="クリックまたはスペースキーで裏返し">
         <div class="flashcard-inner">
           
@@ -129,16 +169,22 @@
           <div class="flashcard-face flashcard-front">
             <div class="card-image-box">
               <div class="card-badges">
-                <span class="badge-tag" id="front-country-badge">🇷🇺 ロシア</span>
-                <span class="badge-tag category" id="front-category-badge">✈️ 戦闘機</span>
+                <span class="m3-badge-chip" id="front-country-badge">
+                  <span class="material-symbols-outlined">flag</span>
+                  <span class="badge-text">ロシア</span>
+                </span>
+                <span class="m3-badge-chip" id="front-category-badge">
+                  <span class="material-symbols-outlined">flight</span>
+                  <span class="badge-text">戦闘機</span>
+                </span>
               </div>
               <img id="card-front-img" src="" alt="兵器識別画像" loading="eager">
             </div>
             
             <div class="card-front-footer">
               <div class="hint-text">
-                <div class="title">この兵器の名前と特徴は？</div>
-                <div class="sub">外見的特徴（形状・ディテール）から識別してみよう</div>
+                <div class="title">この兵器の名称と特徴は？</div>
+                <div class="sub">外見のディテールや特徴から識別してください</div>
               </div>
               <div class="flip-prompt">
                 <span class="material-symbols-outlined">sync</span>
@@ -152,36 +198,30 @@
             <div class="card-back-content">
               
               <div class="card-back-header">
-                <div class="weapon-name" id="back-weapon-name">Su-57 (スホーイ57)</div>
+                <div class="weapon-name" id="back-weapon-name">Su-57</div>
                 <div class="weapon-sub">
                   <span id="back-weapon-en">Sukhoi Su-57</span>
-                  <span class="nato-tag" id="back-weapon-nato">Felon (フェロン)</span>
+                  <span class="nato-tag" id="back-weapon-nato">Felon</span>
                 </div>
               </div>
 
               <!-- 見た目の識別ポイント (最重要) -->
               <div class="id-point-box">
                 <div class="box-title">
-                  <span class="material-symbols-outlined" style="font-size:18px;">visibility</span>
+                  <span class="material-symbols-outlined">visibility</span>
                   <span>見た目の識別ポイント</span>
                 </div>
-                <div class="box-desc" id="back-weapon-appearance">
-                  扁平なブレンデッドウィングボディ、外側に傾斜した全遊動垂直尾翼、大型エアインテークと3次元推力偏向ノズル
-                </div>
+                <div class="box-desc" id="back-weapon-appearance"></div>
               </div>
 
               <!-- 主な特徴・能力 -->
               <div class="features-box">
                 <div class="sec-title">主な特徴・能力</div>
-                <ul class="features-list" id="back-weapon-features">
-                  <!-- 動的生成 -->
-                </ul>
+                <ul class="features-list" id="back-weapon-features"></ul>
               </div>
 
               <!-- 主要スペック -->
-              <div class="specs-grid" id="back-weapon-specs">
-                <!-- 動的生成 -->
-              </div>
+              <div class="specs-grid" id="back-weapon-specs"></div>
 
             </div>
 
@@ -196,32 +236,32 @@
         </div>
       </div>
 
-      <!-- Action Rating Buttons -->
+      <!-- M3 Tonal Action Buttons -->
       <div class="flashcard-actions">
         <div class="rate-buttons-row">
-          <button class="m3-btn btn-again" id="btn-rate-again" title="まだ覚えてない (キー: 1)">
-            <span class="material-symbols-outlined">close</span>
+          <button class="m3-button btn-again" id="btn-rate-again" title="まだ覚えてない (キー: 1)">
+            <span class="material-symbols-outlined">refresh</span>
             <span>もう一度 (1)</span>
           </button>
-          <button class="m3-btn btn-good" id="btn-rate-good" title="覚えた (キー: 2)">
+          <button class="m3-button btn-good" id="btn-rate-good" title="覚えた (キー: 2)">
             <span class="material-symbols-outlined">done</span>
             <span>覚えた (2)</span>
           </button>
-          <button class="m3-btn btn-easy" id="btn-rate-easy" title="完璧に覚えた (キー: 3)">
+          <button class="m3-button btn-easy" id="btn-rate-easy" title="完璧に覚えた (キー: 3)">
             <span class="material-symbols-outlined">check_circle</span>
             <span>完璧 (3)</span>
           </button>
         </div>
 
         <div class="nav-buttons-row">
-          <button class="sub-btn" id="btn-prev-card" title="前のカード (キー: ←)">
+          <button class="m3-outlined-button" id="btn-prev-card" title="前のカード (キー: ←)">
             <span class="material-symbols-outlined">arrow_back</span>
             <span>前へ</span>
           </button>
           <div class="shortcut-guide">
             [Space / クリック]: めくる ｜ [1, 2, 3]: 判定 ｜ [← / →]: 移動
           </div>
-          <button class="sub-btn" id="btn-next-card" title="次のカード (キー: →)">
+          <button class="m3-outlined-button" id="btn-next-card" title="次のカード (キー: →)">
             <span>次へ</span>
             <span class="material-symbols-outlined">arrow_forward</span>
           </button>
@@ -237,11 +277,17 @@
         
         <div class="quiz-question-header">
           <div style="display:flex; align-items:center; gap:0.5rem;">
-            <span class="badge-tag" id="quiz-country-badge">🇷🇺 ロシア</span>
-            <span class="badge-tag category" id="quiz-category-badge">✈️ 戦闘機</span>
+            <span class="m3-badge-chip" id="quiz-country-badge">
+              <span class="material-symbols-outlined">flag</span>
+              <span class="badge-text">ロシア</span>
+            </span>
+            <span class="m3-badge-chip" id="quiz-category-badge">
+              <span class="material-symbols-outlined">flight</span>
+              <span class="badge-text">戦闘機</span>
+            </span>
           </div>
           <div class="progress-counter">
-            スコア: <span id="quiz-score-val" style="color:#10b981;">0</span> / <span id="quiz-attempted-val">0</span>
+            スコア: <span id="quiz-score-val" style="color:#059669;">0</span> / <span id="quiz-attempted-val">0</span>
           </div>
         </div>
 
@@ -251,19 +297,15 @@
         </div>
 
         <!-- 選択肢4択 -->
-        <div class="quiz-options-container" id="quiz-options">
-          <!-- 4つの選択肢ボタンがJSで動的配置される -->
-        </div>
+        <div class="quiz-options-container" id="quiz-options"></div>
 
         <!-- 正解/不正解フィードバック -->
         <div class="quiz-feedback-box" id="quiz-feedback">
           <div class="quiz-feedback-title" id="quiz-feedback-title">
             <span class="material-symbols-outlined" id="quiz-feedback-icon">check_circle</span>
-            <span id="quiz-feedback-text">正解！</span>
+            <span id="quiz-feedback-text">正解</span>
           </div>
-          <div style="font-size:0.9rem; color:#334155; line-height:1.5;" id="quiz-feedback-appearance">
-            <!-- 識別ポイント -->
-          </div>
+          <div style="font-size:0.875rem; line-height:1.5;" id="quiz-feedback-appearance"></div>
           <button class="next-question-btn" id="btn-quiz-next">
             次の問題へ <span class="material-symbols-outlined" style="vertical-align:middle; font-size:18px;">arrow_forward</span>
           </button>
@@ -279,13 +321,11 @@
       <div class="search-and-controls">
         <div class="search-input-box">
           <span class="material-symbols-outlined">search</span>
-          <input type="text" id="gallery-search" class="m3-search-input" placeholder="兵器名、NATOコード、識別特徴で検索...">
+          <input type="text" id="gallery-search" class="m3-search-input" placeholder="名称、NATOコード、識別特徴で検索...">
         </div>
       </div>
 
-      <div class="gallery-grid" id="gallery-grid">
-        <!-- 兵器カードがJSでグリッド配置される -->
-      </div>
+      <div class="gallery-grid" id="gallery-grid"></div>
     </section>
 
     <!-- ======================================================================
@@ -296,7 +336,7 @@
       <!-- 概要カード -->
       <div class="stats-overview-grid">
         <div class="stat-card">
-          <div class="stat-icon" style="background-color:rgba(16,185,129,0.15); color:#10b981;">
+          <div class="stat-icon" style="background-color:var(--md-state-mastered-container); color:var(--md-state-mastered-on-container);">
             <span class="material-symbols-outlined">verified</span>
           </div>
           <div class="stat-data">
@@ -306,7 +346,7 @@
         </div>
 
         <div class="stat-card">
-          <div class="stat-icon" style="background-color:rgba(245,158,11,0.15); color:#f59e0b;">
+          <div class="stat-icon" style="background-color:var(--md-state-reviewing-container); color:var(--md-state-reviewing-on-container);">
             <span class="material-symbols-outlined">trending_up</span>
           </div>
           <div class="stat-data">
@@ -316,7 +356,7 @@
         </div>
 
         <div class="stat-card">
-          <div class="stat-icon" style="background-color:rgba(244,63,94,0.15); color:#f43f5e;">
+          <div class="stat-icon" style="background-color:var(--md-state-learning-container); color:var(--md-state-learning-on-container);">
             <span class="material-symbols-outlined">error_outline</span>
           </div>
           <div class="stat-data">
@@ -338,10 +378,8 @@
 
       <!-- 国別・類別進捗プログレスバー -->
       <div class="progress-breakdown-card">
-        <h3 style="font-size:1.1rem; font-weight:700;">国別・類別習得状況</h3>
-        <div id="stats-breakdown-container" style="display:flex; flex-direction:column; gap:1rem;">
-          <!-- JSで動的生成 -->
-        </div>
+        <h3 style="font-size:1.05rem; font-weight:700;">国別・類別習得状況</h3>
+        <div id="stats-breakdown-container" style="display:flex; flex-direction:column; gap:1rem;"></div>
       </div>
 
     </section>
@@ -349,7 +387,7 @@
   </main>
 
   <!-- ======================================================================
-       MODAL: WEAPON DETAIL (詳細ポップアップ)
+       MODAL: WEAPON DETAIL (M3 Dialog)
        ====================================================================== -->
   <div class="modal-backdrop" id="weapon-detail-modal">
     <div class="m3-modal">
@@ -357,25 +395,31 @@
         <span class="material-symbols-outlined">close</span>
       </button>
 
-      <div style="width:100%; height:360px; background-color:#f1f5f9; position:relative;">
+      <div style="width:100%; height:340px; background-color:var(--md-sys-color-surface-container); position:relative;">
         <img id="modal-img" src="" alt="兵器画像" style="width:100%; height:100%; object-fit:cover;">
         <div class="card-badges" style="top:1rem; left:1rem;">
-          <span class="badge-tag" id="modal-country-badge">🇷🇺 ロシア</span>
-          <span class="badge-tag category" id="modal-category-badge">✈️ 戦闘機</span>
+          <span class="m3-badge-chip" id="modal-country-badge">
+            <span class="material-symbols-outlined">flag</span>
+            <span class="badge-text">ロシア</span>
+          </span>
+          <span class="m3-badge-chip" id="modal-category-badge">
+            <span class="material-symbols-outlined">flight</span>
+            <span class="badge-text">戦闘機</span>
+          </span>
         </div>
       </div>
 
       <div style="padding:1.5rem; display:flex; flex-direction:column; gap:1rem;">
         <div>
-          <div style="font-size:1.5rem; font-weight:800; color:var(--md-sys-color-on-surface);" id="modal-name">Su-57</div>
-          <div style="font-size:0.9rem; color:var(--md-sys-color-primary); margin-top:0.3rem; font-weight:600;" id="modal-sub">
+          <div style="font-size:1.35rem; font-weight:700; color:var(--md-sys-color-on-surface);" id="modal-name">Su-57</div>
+          <div style="font-size:0.8125rem; color:var(--md-sys-color-primary); margin-top:0.25rem; font-weight:500;" id="modal-sub">
             Sukhoi Su-57 ・ <span class="nato-tag" id="modal-nato">Felon</span>
           </div>
         </div>
 
         <div class="id-point-box">
           <div class="box-title">
-            <span class="material-symbols-outlined" style="font-size:18px;">visibility</span>
+            <span class="material-symbols-outlined">visibility</span>
             <span>見た目の識別ポイント</span>
           </div>
           <div class="box-desc" id="modal-appearance"></div>
@@ -397,52 +441,52 @@
   </div>
 
   <!-- ======================================================================
-       MODAL: MOBILE CONNECT (スマホ接続QRコード)
+       MODAL: MOBILE CONNECT (M3 Dialog)
        ====================================================================== -->
   <div class="modal-backdrop" id="mobile-connect-modal">
-    <div class="m3-modal" style="max-width: 440px; text-align: center; padding: 2rem 1.5rem;">
+    <div class="m3-modal" style="max-width: 420px; text-align: center; padding: 2rem 1.5rem;">
       <button class="modal-close-btn" id="mobile-modal-close-btn" title="閉じる">
         <span class="material-symbols-outlined">close</span>
       </button>
 
       <div style="display:flex; justify-content:center; margin-bottom:1rem;">
-        <div class="brand-icon" style="width:48px; height:48px;">
-          <span class="material-symbols-outlined" style="font-size:28px;">smartphone</span>
+        <div class="brand-avatar" style="width:48px; height:48px;">
+          <span class="material-symbols-outlined" style="font-size:26px;">smartphone</span>
         </div>
       </div>
 
-      <h3 style="font-size:1.3rem; font-weight:700; color:var(--md-sys-color-on-surface); margin-bottom:0.5rem;">スマホからアクセス</h3>
-      <p style="font-size:0.85rem; color:var(--md-sys-color-on-surface-variant); margin-bottom:1.25rem;">
-        スマホをPCと同じWi-Fiに接続し、カメラでQRコードを読み取ってください。
+      <h3 style="font-size:1.25rem; font-weight:700; color:var(--md-sys-color-on-surface); margin-bottom:0.5rem;">モバイル連携</h3>
+      <p style="font-size:0.8125rem; color:var(--md-sys-color-on-surface-variant); margin-bottom:1.25rem;">
+        同じWi-Fiに接続し、カメラでQRコードをスキャンしてください。
       </p>
 
       <!-- QR Code Image Box -->
-      <div style="background:#ffffff; padding:12px; border-radius:16px; display:inline-block; margin-bottom:1.25rem; box-shadow:0 2px 8px rgba(0,0,0,0.1); border:1px solid var(--md-sys-color-outline-variant);">
-        <img id="mobile-qr-img" src="" alt="QRコード" style="width:200px; height:200px; display:block;">
+      <div style="background:#ffffff; padding:12px; border-radius:var(--md-sys-shape-corner-medium); display:inline-block; margin-bottom:1.25rem; box-shadow:var(--md-sys-elevation-1); border:1px solid var(--md-sys-color-outline-variant);">
+        <img id="mobile-qr-img" src="" alt="QRコード" style="width:190px; height:190px; display:block;">
       </div>
 
       <!-- URL Display & Input -->
-      <div style="background:var(--md-sys-color-surface-container-high); border:1px solid var(--md-sys-color-outline-variant); border-radius:12px; padding:0.75rem 1rem; margin-bottom:1rem; text-align:left;">
-        <div style="font-size:0.75rem; color:var(--md-sys-color-on-surface-variant); margin-bottom:0.25rem;">ブラウザ版アクセス:</div>
-        <div style="font-family:var(--font-mono); font-size:0.85rem; color:var(--md-sys-color-primary); font-weight:600; word-break:break-all;" id="mobile-url-text">
+      <div style="background:var(--md-sys-color-surface-container); border-radius:var(--md-sys-shape-corner-medium); padding:0.75rem 1rem; margin-bottom:1rem; text-align:left;">
+        <div style="font-size:0.6875rem; color:var(--md-sys-color-on-surface-variant); margin-bottom:0.25rem; font-weight:600; text-transform:uppercase;">アクセスURL</div>
+        <div style="font-family:var(--font-family-mono); font-size:0.8125rem; color:var(--md-sys-color-primary); font-weight:600; word-break:break-all;" id="mobile-url-text">
           http://192.168.0.192:8080/index.html
         </div>
       </div>
 
       <!-- APK Direct Download Button -->
       <div style="margin-bottom: 1rem;">
-        <a id="btn-apk-download-link" href="/military-id-app.apk" download="military-id-app.apk" class="m3-btn" style="width:100%; text-decoration:none; background-color:var(--md-sys-color-primary); color:#ffffff; padding:12px; font-size:0.9rem;">
+        <a id="btn-apk-download-link" href="/military-id-app.apk" download="military-id-app.apk" class="m3-button" style="width:100%; text-decoration:none; background-color:var(--md-sys-color-primary); color:var(--md-sys-color-on-primary);">
           <span class="material-symbols-outlined">download</span>
           <span>Android APK をダウンロード (11.4MB)</span>
         </a>
       </div>
 
       <div style="display:flex; justify-content:center; gap:0.5rem; margin-bottom:0.75rem;">
-        <button id="btn-qr-show-web" class="sub-btn" style="font-size:0.75rem; padding:5px 12px;">Web版QR</button>
-        <button id="btn-qr-show-apk" class="sub-btn" style="font-size:0.75rem; padding:5px 12px;">APK直DL用QR</button>
+        <button id="btn-qr-show-web" class="m3-outlined-button" style="font-size:0.75rem; height:32px; padding:0 12px;">Web版QR</button>
+        <button id="btn-qr-show-apk" class="m3-outlined-button" style="font-size:0.75rem; height:32px; padding:0 12px;">APK直接DL用QR</button>
       </div>
 
-      <div style="font-size:0.75rem; color:var(--md-sys-color-on-surface-variant); line-height:1.4;">
+      <div style="font-size:0.6875rem; color:var(--md-sys-color-on-surface-variant); line-height:1.4;">
         ※APKインストール時は「提供元不明のアプリのインストールを許可」を有効にしてください。
       </div>
     </div>
