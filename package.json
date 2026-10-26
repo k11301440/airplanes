@@ -1,0 +1,19 @@
+{
+  "name": "military-weapon-id-memorization",
+  "version": "1.0.0",
+  "description": "ロシアおよび中国の現代戦闘機・火器・火砲・ミサイル・爆弾識別暗記アプリ (Material Design 3)",
+  "main": "index.html",
+  "scripts": {
+    "start": "python server.py",
+    "serve": "npx serve ."
+  },
+  "keywords": [
+    "material-design-3",
+    "military-aircraft",
+    "weapons",
+    "flashcards",
+    "quiz"
+  ],
+  "author": "",
+  "license": "MIT"
+}

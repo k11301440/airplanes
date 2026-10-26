@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>現代兵器識別暗記 - ロシア & 中国 (Material Design 3)</title>
+  
+  <!-- Google Fonts: Noto Sans JP, Roboto, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Outlined -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top App Bar -->
+  <header class="top-app-bar">
+    <div class="brand-section">
+      <div class="brand-icon">
+        <span class="material-symbols-outlined">radar</span>
+      </div>
+      <div>
+        <div class="brand-title">
+          <span>兵器識別暗記</span>
+          <span class="badge">RU / CN</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs (M3 Segmented) -->
+    <nav class="nav-tabs" role="tablist">
+      <button class="nav-tab-btn active" data-mode="flashcard" role="tab" aria-selected="true">
+        <span class="material-symbols-outlined">style</span>
+        <span>暗記カード</span>
+      </button>
+      <button class="nav-tab-btn" data-mode="quiz" role="tab" aria-selected="false">
+        <span class="material-symbols-outlined">quiz</span>
+        <span>4択テスト</span>
+      </button>
+      <button class="nav-tab-btn" data-mode="gallery" role="tab" aria-selected="false">
+        <span class="material-symbols-outlined">grid_view</span>
+        <span>図鑑一覧</span>
+      </button>
+      <button class="nav-tab-btn" data-mode="stats" role="tab" aria-selected="false">
+        <span class="material-symbols-outlined">insights</span>
+        <span>学習統計</span>
+      </button>
+    </nav>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <button id="btn-mobile-connect" class="icon-btn" title="スマホで接続 (QRコード)">
+        <span class="material-symbols-outlined">smartphone</span>
+      </button>
+      <button id="btn-shuffle" class="icon-btn" title="カードをシャッフル (R)">
+        <span class="material-symbols-outlined">shuffle</span>
+      </button>
+      <button id="btn-weak-only" class="icon-btn" title="苦手な兵器のみ特訓">
+        <span class="material-symbols-outlined">priority_high</span>
+      </button>
+      <button id="btn-reset-data" class="icon-btn" title="進捗データをリセット">
+        <span class="material-symbols-outlined">restart_alt</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="main-content">
+    
+    <!-- Filter Section (国 & 類別フィルター) -->
+    <section class="filter-bar" aria-label="兵器フィルター">
+      <!-- 国選択 -->
+      <div class="filter-row">
+        <span class="filter-label">所属国</span>
+        <div class="chip-group" id="country-chips">
+          <button class="m3-chip active" data-country="all">
+            <span>すべて</span>
+            <span class="chip-count" id="count-country-all">0</span>
+          </button>
+          <button class="m3-chip" data-country="russia">
+            <span>🇷🇺 ロシア</span>
+            <span class="chip-count" id="count-country-ru">0</span>
+          </button>
+          <button class="m3-chip" data-country="china">
+            <span>🇨🇳 中国</span>
+            <span class="chip-count" id="count-country-cn">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 類別選択 -->
+      <div class="filter-row">
+        <span class="filter-label">類別</span>
+        <div class="chip-group" id="category-chips">
+          <button class="m3-chip active" data-category="all">すべて</button>
+          <button class="m3-chip" data-category="aircraft">✈️ 戦闘機・航空機</button>
+          <button class="m3-chip" data-category="firearm">🔫 火器・小火器</button>
+          <button class="m3-chip" data-category="artillery">💥 火砲・自走砲</button>
+          <button class="m3-chip" data-category="missile">🚀 ミサイル</button>
+          <button class="m3-chip" data-category="bomb">💣 爆弾</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         MODE 1: FLASHCARDS (暗記カード)
+         ====================================================================== -->
+    <section id="flashcard-view" class="flashcard-section">
+      <!-- Status Counter -->
+      <div class="card-header-status">
+        <div class="filter-summary">
+          <span id="current-filter-label">🇷🇺 ロシア & 🇨🇳 中国 ・ すべて</span>
+        </div>
+        <div class="progress-counter">
+          <span id="card-index">1</span> / <span id="card-total">54</span>
+        </div>
+      </div>
+
+      <!-- 3D Flip Card -->
+      <div class="flashcard-wrapper" id="flashcard-wrapper" title="クリックまたはスペースキーで裏返し">
+        <div class="flashcard-inner">
+          
+          <!-- FRONT: 見た目 (問題) -->
+          <div class="flashcard-face flashcard-front">
+            <div class="card-image-box">
+              <div class="card-badges">
+                <span class="badge-tag" id="front-country-badge">🇷🇺 ロシア</span>
+                <span class="badge-tag category" id="front-category-badge">✈️ 戦闘機</span>
+              </div>
+              <img id="card-front-img" src="" alt="兵器識別画像" loading="eager">
+            </div>
+            
+            <div class="card-front-footer">
+              <div class="hint-text">
+                <div class="title">この兵器の名前と特徴は？</div>
+                <div class="sub">外見的特徴（形状・ディテール）から識別してみよう</div>
+              </div>
+              <div class="flip-prompt">
+                <span class="material-symbols-outlined">sync</span>
+                <span>めくって確認</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- BACK: 正解 & 識別ポイント & 特徴能力 -->
+          <div class="flashcard-face flashcard-back">
+            <div class="card-back-content">
+              
+              <div class="card-back-header">
+                <div class="weapon-name" id="back-weapon-name">Su-57 (スホーイ57)</div>
+                <div class="weapon-sub">
+                  <span id="back-weapon-en">Sukhoi Su-57</span>
+                  <span class="nato-tag" id="back-weapon-nato">Felon (フェロン)</span>
+                </div>
+              </div>
+
+              <!-- 見た目の識別ポイント (最重要) -->
+              <div class="id-point-box">
+                <div class="box-title">
+                  <span class="material-symbols-outlined" style="font-size:18px;">visibility</span>
+                  <span>見た目の識別ポイント</span>
+                </div>
+                <div class="box-desc" id="back-weapon-appearance">
+                  扁平なブレンデッドウィングボディ、外側に傾斜した全遊動垂直尾翼、大型エアインテークと3次元推力偏向ノズル
+                </div>
+              </div>
+
+              <!-- 主な特徴・能力 -->
+              <div class="features-box">
+                <div class="sec-title">主な特徴・能力</div>
+                <ul class="features-list" id="back-weapon-features">
+                  <!-- 動的生成 -->
+                </ul>
+              </div>
+
+              <!-- 主要スペック -->
+              <div class="specs-grid" id="back-weapon-specs">
+                <!-- 動的生成 -->
+              </div>
+
+            </div>
+
+            <!-- ライセンス表記 -->
+            <div class="card-back-footer">
+              <div id="back-weapon-license">Photo: Wikimedia Commons / CC BY-SA</div>
+              <a href="#" target="_blank" rel="noopener noreferrer" class="license-link" id="back-wiki-link">Wikipediaで詳細</a>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Action Rating Buttons -->
+      <div class="flashcard-actions">
+        <div class="rate-buttons-row">
+          <button class="m3-btn btn-again" id="btn-rate-again" title="まだ覚えてない (キー: 1)">
+            <span class="material-symbols-outlined">close</span>
+            <span>もう一度 (1)</span>
+          </button>
+          <button class="m3-btn btn-good" id="btn-rate-good" title="覚えた (キー: 2)">
+            <span class="material-symbols-outlined">done</span>
+            <span>覚えた (2)</span>
+          </button>
+          <button class="m3-btn btn-easy" id="btn-rate-easy" title="完璧に覚えた (キー: 3)">
+            <span class="material-symbols-outlined">check_circle</span>
+            <span>完璧 (3)</span>
+          </button>
+        </div>
+
+        <div class="nav-buttons-row">
+          <button class="sub-btn" id="btn-prev-card" title="前のカード (キー: ←)">
+            <span class="material-symbols-outlined">arrow_back</span>
+            <span>前へ</span>
+          </button>
+          <div class="shortcut-guide">
+            [Space / クリック]: めくる ｜ [1, 2, 3]: 判定 ｜ [← / →]: 移動
+          </div>
+          <button class="sub-btn" id="btn-next-card" title="次のカード (キー: →)">
+            <span>次へ</span>
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         MODE 2: 4-CHOICE QUIZ (4択テスト)
+         ====================================================================== -->
+    <section id="quiz-view" class="quiz-section" style="display: none;">
+      <div class="quiz-card">
+        
+        <div class="quiz-question-header">
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <span class="badge-tag" id="quiz-country-badge">🇷🇺 ロシア</span>
+            <span class="badge-tag category" id="quiz-category-badge">✈️ 戦闘機</span>
+          </div>
+          <div class="progress-counter">
+            スコア: <span id="quiz-score-val" style="color:#10b981;">0</span> / <span id="quiz-attempted-val">0</span>
+          </div>
+        </div>
+
+        <!-- 設問画像 -->
+        <div class="quiz-image-box">
+          <img id="quiz-image" src="" alt="クイズ画像">
+        </div>
+
+        <!-- 選択肢4択 -->
+        <div class="quiz-options-container" id="quiz-options">
+          <!-- 4つの選択肢ボタンがJSで動的配置される -->
+        </div>
+
+        <!-- 正解/不正解フィードバック -->
+        <div class="quiz-feedback-box" id="quiz-feedback">
+          <div class="quiz-feedback-title" id="quiz-feedback-title">
+            <span class="material-symbols-outlined" id="quiz-feedback-icon">check_circle</span>
+            <span id="quiz-feedback-text">正解！</span>
+          </div>
+          <div style="font-size:0.9rem; color:#cbd5e1;" id="quiz-feedback-appearance">
+            <!-- 識別ポイント -->
+          </div>
+          <button class="next-question-btn" id="btn-quiz-next">
+            次の問題へ <span class="material-symbols-outlined" style="vertical-align:middle; font-size:18px;">arrow_forward</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         MODE 3: GALLERY / CODEX (兵器図鑑一覧)
+         ====================================================================== -->
+    <section id="gallery-view" class="gallery-section" style="display: none;">
+      <div class="search-and-controls">
+        <div class="search-input-box">
+          <span class="material-symbols-outlined">search</span>
+          <input type="text" id="gallery-search" class="m3-search-input" placeholder="兵器名、NATOコード、識別特徴で検索...">
+        </div>
+      </div>
+
+      <div class="gallery-grid" id="gallery-grid">
+        <!-- 兵器カードがJSでグリッド配置される -->
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         MODE 4: STATS & DASHBOARD (学習進捗・統計)
+         ====================================================================== -->
+    <section id="stats-view" class="stats-section" style="display: none;">
+      
+      <!-- 概要カード -->
+      <div class="stats-overview-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="background-color:rgba(16,185,129,0.15); color:#10b981;">
+            <span class="material-symbols-outlined">verified</span>
+          </div>
+          <div class="stat-data">
+            <span class="label">マスター達成</span>
+            <span class="val" id="stat-mastered-count">0</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="background-color:rgba(245,158,11,0.15); color:#f59e0b;">
+            <span class="material-symbols-outlined">trending_up</span>
+          </div>
+          <div class="stat-data">
+            <span class="label">学習中</span>
+            <span class="val" id="stat-learning-count">0</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="background-color:rgba(244,63,94,0.15); color:#f43f5e;">
+            <span class="material-symbols-outlined">error_outline</span>
+          </div>
+          <div class="stat-data">
+            <span class="label">要復習（苦手）</span>
+            <span class="val" id="stat-weak-count">0</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <span class="material-symbols-outlined">percent</span>
+          </div>
+          <div class="stat-data">
+            <span class="label">全体習得率</span>
+            <span class="val" id="stat-overall-percent">0%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 国別・類別進捗プログレスバー -->
+      <div class="progress-breakdown-card">
+        <h3 style="font-size:1.1rem; font-weight:700;">国別・類別習得状況</h3>
+        <div id="stats-breakdown-container" style="display:flex; flex-direction:column; gap:1rem;">
+          <!-- JSで動的生成 -->
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ======================================================================
+       MODAL: WEAPON DETAIL (詳細ポップアップ)
+       ====================================================================== -->
+  <div class="modal-backdrop" id="weapon-detail-modal">
+    <div class="m3-modal">
+      <button class="modal-close-btn" id="modal-close-btn" title="閉じる">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+
+      <div style="width:100%; height:360px; background-color:#0b1120; position:relative;">
+        <img id="modal-img" src="" alt="兵器画像" style="width:100%; height:100%; object-fit:cover;">
+        <div class="card-badges" style="top:1rem; left:1rem;">
+          <span class="badge-tag" id="modal-country-badge">🇷🇺 ロシア</span>
+          <span class="badge-tag category" id="modal-category-badge">✈️ 戦闘機</span>
+        </div>
+      </div>
+
+      <div style="padding:1.5rem; display:flex; flex-direction:column; gap:1rem;">
+        <div>
+          <div style="font-size:1.6rem; font-weight:800; color:#ffffff;" id="modal-name">Su-57</div>
+          <div style="font-size:0.9rem; color:#38bdf8; margin-top:0.3rem;" id="modal-sub">
+            Sukhoi Su-57 ・ <span class="nato-tag" id="modal-nato">Felon</span>
+          </div>
+        </div>
+
+        <div class="id-point-box">
+          <div class="box-title">
+            <span class="material-symbols-outlined" style="font-size:18px;">visibility</span>
+            <span>見た目の識別ポイント</span>
+          </div>
+          <div class="box-desc" id="modal-appearance"></div>
+        </div>
+
+        <div class="features-box">
+          <div class="sec-title">主な特徴・能力</div>
+          <ul class="features-list" id="modal-features"></ul>
+        </div>
+
+        <div class="specs-grid" id="modal-specs"></div>
+
+        <div style="border-top:1px solid var(--md-sys-color-outline-variant); padding-top:0.75rem; font-size:0.75rem; color:var(--md-sys-color-on-surface-variant); display:flex; justify-content:space-between; align-items:center;">
+          <div id="modal-license">Photo: Wikimedia Commons / CC BY-SA</div>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="license-link" id="modal-wiki-link">Wikipediaで見る</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       MODAL: MOBILE CONNECT (スマホ接続QRコード)
+       ====================================================================== -->
+  <div class="modal-backdrop" id="mobile-connect-modal">
+    <div class="m3-modal" style="max-width: 440px; text-align: center; padding: 2rem 1.5rem;">
+      <button class="modal-close-btn" id="mobile-modal-close-btn" title="閉じる">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+
+      <div style="display:flex; justify-content:center; margin-bottom:1rem;">
+        <div class="brand-icon" style="width:48px; height:48px;">
+          <span class="material-symbols-outlined" style="font-size:28px;">smartphone</span>
+        </div>
+      </div>
+
+      <h3 style="font-size:1.3rem; font-weight:700; color:#ffffff; margin-bottom:0.5rem;">スマホからアクセス</h3>
+      <p style="font-size:0.85rem; color:#94a3b8; margin-bottom:1.25rem;">
+        スマホをPCと同じWi-Fiに接続し、カメラでQRコードを読み取ってください。
+      </p>
+
+      <!-- QR Code Image Box -->
+      <div style="background:#ffffff; padding:12px; border-radius:16px; display:inline-block; margin-bottom:1.25rem; box-shadow:0 4px 12px rgba(0,0,0,0.5);">
+        <img id="mobile-qr-img" src="" alt="QRコード" style="width:200px; height:200px; display:block;">
+      </div>
+
+      <!-- URL Display & Input -->
+      <div style="background:rgba(0,0,0,0.3); border:1px solid var(--md-sys-color-outline-variant); border-radius:12px; padding:0.75rem 1rem; margin-bottom:1rem; text-align:left;">
+        <div style="font-size:0.75rem; color:#94a3b8; margin-bottom:0.25rem;">ブラウザ版アクセス:</div>
+        <div style="font-family:var(--font-mono); font-size:0.85rem; color:#38bdf8; word-break:break-all;" id="mobile-url-text">
+          http://192.168.0.192:8080/index.html
+        </div>
+      </div>
+
+      <!-- APK Direct Download Button -->
+      <div style="margin-bottom: 1.25rem;">
+        <a id="btn-apk-download-link" href="/military-id-app.apk" download="military-id-app.apk" class="m3-btn" style="width:100%; text-decoration:none; background-color:#10b981; color:#ffffff; padding:12px; font-size:0.9rem;">
+          <span class="material-symbols-outlined">download</span>
+          <span>Android APK をダウンロード (11.4MB)</span>
+        </a>
+      </div>
+
+      <div style="display:flex; justify-content:center; gap:0.5rem; margin-bottom:0.75rem;">
+        <button id="btn-qr-show-web" class="sub-btn" style="font-size:0.75rem; padding:4px 10px;">Web版QR</button>
+        <button id="btn-qr-show-apk" class="sub-btn" style="font-size:0.75rem; padding:4px 10px;">APK直DL用QR</button>
+      </div>
+
+      <div style="font-size:0.75rem; color:#64748b; line-height:1.4;">
+        ※APKインストール時は「提供元不明のアプリのインストールを許可」を有効にしてください。
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="weapons.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
