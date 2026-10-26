@@ -1,46 +1,62 @@
 /* ==========================================================================
-   Material Design 3 (M3) Military Identification & Memorization App Styles
+   Material Design 3 (M3) - Pure Light & Minimal Edition
+   Military Identification & Memorization App
    ========================================================================== */
 
 :root {
-  /* M3 Tone Palette: Tactical Navy / Slate / Cyan Accent */
-  --md-sys-color-primary: #0284c7;
+  /* M3 Light Theme Palette (Baseline Material 3) */
+  --md-sys-color-primary: #00639b;
   --md-sys-color-on-primary: #ffffff;
-  --md-sys-color-primary-container: #e0f2fe;
-  --md-sys-color-on-primary-container: #0369a1;
+  --md-sys-color-primary-container: #c2e7ff;
+  --md-sys-color-on-primary-container: #001d32;
 
-  --md-sys-color-secondary: #475569;
+  --md-sys-color-secondary: #526070;
   --md-sys-color-on-secondary: #ffffff;
-  --md-sys-color-secondary-container: #f1f5f9;
-  --md-sys-color-on-secondary-container: #1e293b;
+  --md-sys-color-secondary-container: #d6e4f7;
+  --md-sys-color-on-secondary-container: #0f1d2a;
 
-  --md-sys-color-tertiary: #0d9488;
+  --md-sys-color-tertiary: #6b5778;
   --md-sys-color-on-tertiary: #ffffff;
-  --md-sys-color-tertiary-container: #ccfbf1;
-  --md-sys-color-on-tertiary-container: #115e59;
+  --md-sys-color-tertiary-container: #f3daff;
+  --md-sys-color-on-tertiary-container: #251432;
 
-  --md-sys-color-surface: #0f172a;
-  --md-sys-color-surface-dim: #0b1120;
-  --md-sys-color-surface-container: #1e293b;
-  --md-sys-color-surface-container-high: #334155;
-  --md-sys-color-surface-container-highest: #475569;
-  --md-sys-color-on-surface: #f8fafc;
-  --md-sys-color-on-surface-variant: #94a3b8;
-  --md-sys-color-outline: #64748b;
-  --md-sys-color-outline-variant: #334155;
+  --md-sys-color-surface: #f8fafc;
+  --md-sys-color-surface-dim: #f1f5f9;
+  --md-sys-color-surface-bright: #ffffff;
+  --md-sys-color-surface-container-lowest: #ffffff;
+  --md-sys-color-surface-container-low: #f8fafc;
+  --md-sys-color-surface-container: #ffffff;
+  --md-sys-color-surface-container-high: #f1f5f9;
+  --md-sys-color-surface-container-highest: #e2e8f0;
 
-  /* Status Colors */
-  --color-russia: #ef4444;
-  --color-china: #eab308;
-  --color-again: #f43f5e;
-  --color-good: #f59e0b;
-  --color-easy: #10b981;
+  --md-sys-color-on-surface: #1e293b;
+  --md-sys-color-on-surface-variant: #64748b;
+  --md-sys-color-outline: #cbd5e1;
+  --md-sys-color-outline-variant: #e2e8f0;
 
-  /* Elevation Shadows */
-  --md-elevation-1: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
-  --md-elevation-2: 0 4px 6px -1px rgba(0,0,0,0.5), 0 2px 4px -2px rgba(0,0,0,0.4);
-  --md-elevation-3: 0 10px 15px -3px rgba(0,0,0,0.6), 0 4px 6px -4px rgba(0,0,0,0.5);
-  --md-elevation-4: 0 20px 25px -5px rgba(0,0,0,0.7), 0 8px 10px -6px rgba(0,0,0,0.6);
+  /* M3 Semantic State Colors (Soft / Tonal) */
+  --color-russia-bg: #fee2e2;
+  --color-russia-fg: #b91c1c;
+  --color-china-bg: #fef3c7;
+  --color-china-fg: #b45309;
+
+  --color-again-bg: #ffe4e6;
+  --color-again-fg: #e11d48;
+  --color-again-hover: #f43f5e;
+
+  --color-good-bg: #fef3c7;
+  --color-good-fg: #d97706;
+  --color-good-hover: #f59e0b;
+
+  --color-easy-bg: #dcfce7;
+  --color-easy-fg: #059669;
+  --color-easy-hover: #10b981;
+
+  /* M3 Ambient Shadows */
+  --md-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.05);
+  --md-elevation-2: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --md-elevation-3: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  --md-elevation-4: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
   /* Shape Radii */
   --md-shape-xs: 4px;
@@ -71,14 +87,17 @@ body {
   flex-direction: column;
   overflow-x: hidden;
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* App Header / Top App Bar */
+/* ==========================================================================
+   Top App Bar (M3 Small / Flat)
+   ========================================================================== */
 .top-app-bar {
   position: sticky;
   top: 0;
   z-index: 50;
-  background-color: rgba(15, 23, 42, 0.92);
+  background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--md-sys-color-outline-variant);
   padding: 0.75rem 1.25rem;
@@ -98,22 +117,23 @@ body {
   width: 40px;
   height: 40px;
   border-radius: var(--md-shape-md);
-  background: linear-gradient(135deg, #0284c7, #0ea5e9);
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--md-elevation-2);
 }
 
 .brand-icon .material-symbols-outlined {
   font-size: 24px;
-  color: #ffffff;
+  color: var(--md-sys-color-primary);
 }
 
 .brand-title {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  color: var(--md-sys-color-on-surface);
+  letter-spacing: -0.01em;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -121,29 +141,30 @@ body {
 
 .brand-title .badge {
   font-size: 0.7rem;
-  background-color: var(--md-sys-color-surface-container-highest);
-  color: #38bdf8;
+  background-color: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-secondary);
   padding: 2px 6px;
   border-radius: var(--md-shape-xs);
   font-weight: 600;
   font-family: var(--font-mono);
 }
 
-/* Mode Navigation Tabs */
+/* ==========================================================================
+   M3 Segmented Navigation Tabs
+   ========================================================================== */
 .nav-tabs {
   display: flex;
-  background-color: var(--md-sys-color-surface-container);
+  background-color: var(--md-sys-color-surface-container-high);
   border-radius: var(--md-shape-full);
-  padding: 4px;
-  gap: 4px;
-  border: 1px solid var(--md-sys-color-outline-variant);
+  padding: 3px;
+  gap: 2px;
 }
 
 .nav-tab-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 6px 14px;
+  padding: 7px 16px;
   border-radius: var(--md-shape-full);
   border: none;
   background: transparent;
@@ -157,13 +178,13 @@ body {
 
 .nav-tab-btn:hover {
   color: var(--md-sys-color-on-surface);
-  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .nav-tab-btn.active {
-  background-color: var(--md-sys-color-primary);
-  color: #ffffff;
-  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
+  background-color: var(--md-sys-color-surface-bright);
+  color: var(--md-sys-color-primary);
+  font-weight: 700;
+  box-shadow: var(--md-elevation-1);
 }
 
 .nav-tab-btn .material-symbols-outlined {
@@ -174,7 +195,7 @@ body {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .icon-btn {
@@ -182,8 +203,8 @@ body {
   height: 38px;
   border-radius: var(--md-shape-full);
   border: 1px solid var(--md-sys-color-outline-variant);
-  background-color: var(--md-sys-color-surface-container);
-  color: var(--md-sys-color-on-surface);
+  background-color: var(--md-sys-color-surface-container-lowest);
+  color: var(--md-sys-color-on-surface-variant);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -193,47 +214,52 @@ body {
 
 .icon-btn:hover {
   background-color: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface);
   border-color: var(--md-sys-color-outline);
 }
 
-/* Main Container */
+/* ==========================================================================
+   Main Content Layout
+   ========================================================================== */
 .main-content {
   flex: 1;
-  max-width: 1200px;
+  max-width: 1080px;
   width: 100%;
   margin: 0 auto;
-  padding: 1.25rem 1rem 3rem 1rem;
+  padding: 1.5rem 1rem 3.5rem 1rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
-/* Filter Bar (Country & Category Chips) */
+/* ==========================================================================
+   Filter Bar (M3 Filter Chips)
+   ========================================================================== */
 .filter-bar {
-  background-color: var(--md-sys-color-surface-container);
+  background-color: var(--md-sys-color-surface-container-lowest);
   border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: var(--md-shape-lg);
-  padding: 0.85rem 1.25rem;
+  padding: 1rem 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.85rem;
   box-shadow: var(--md-elevation-1);
 }
 
 .filter-row {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.75rem;
   flex-wrap: wrap;
 }
 
 .filter-label {
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: 0.78rem;
+  font-weight: 700;
   color: var(--md-sys-color-on-surface-variant);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  min-width: 48px;
+  min-width: 52px;
 }
 
 .chip-group {
@@ -247,10 +273,10 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 5px 12px;
+  padding: 6px 14px;
   border-radius: var(--md-shape-sm);
   border: 1px solid var(--md-sys-color-outline-variant);
-  background-color: var(--md-sys-color-surface);
+  background-color: var(--md-sys-color-surface-bright);
   color: var(--md-sys-color-on-surface-variant);
   font-size: 0.825rem;
   font-weight: 500;
@@ -265,34 +291,34 @@ body {
 }
 
 .m3-chip.active {
-  background-color: #0369a1;
-  color: #ffffff;
-  border-color: #38bdf8;
-  font-weight: 600;
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  border-color: #7dd3fc;
+  font-weight: 700;
 }
 
 .m3-chip .chip-count {
   font-size: 0.72rem;
   padding: 1px 6px;
   border-radius: var(--md-shape-full);
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(0, 0, 0, 0.06);
   font-family: var(--font-mono);
+  font-weight: 600;
 }
 
-/* Russia & China Chip Highlights */
 .m3-chip[data-country="russia"].active {
-  background-color: rgba(239, 68, 68, 0.25);
-  border-color: #ef4444;
-  color: #fca5a5;
+  background-color: var(--color-russia-bg);
+  border-color: #fca5a5;
+  color: var(--color-russia-fg);
 }
 .m3-chip[data-country="china"].active {
-  background-color: rgba(234, 179, 8, 0.25);
-  border-color: #eab308;
-  color: #fde047;
+  background-color: var(--color-china-bg);
+  border-color: #fde047;
+  color: var(--color-china-fg);
 }
 
 /* ==========================================================================
-   MODE 1: FLASHCARDS (暗記カード)
+   MODE 1: FLASHCARDS (暗記カード - M3クリーンライト)
    ========================================================================== */
 .flashcard-section {
   display: flex;
@@ -304,7 +330,7 @@ body {
 
 .card-header-status {
   width: 100%;
-  max-width: 680px;
+  max-width: 640px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -314,14 +340,14 @@ body {
 
 .progress-counter {
   font-family: var(--font-mono);
-  font-weight: 600;
-  color: var(--md-sys-color-on-surface);
+  font-weight: 700;
+  color: var(--md-sys-color-primary);
 }
 
 /* 3D Flip Card Container */
 .flashcard-wrapper {
   width: 100%;
-  max-width: 680px;
+  max-width: 640px;
   height: 520px;
   perspective: 1200px;
   cursor: pointer;
@@ -347,25 +373,30 @@ body {
   height: 100%;
   backface-visibility: hidden;
   border-radius: var(--md-shape-xl);
-  background-color: var(--md-sys-color-surface-container);
+  background-color: var(--md-sys-color-surface-container-lowest);
   border: 1px solid var(--md-sys-color-outline-variant);
-  box-shadow: var(--md-elevation-3);
+  box-shadow: var(--md-elevation-2);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.flashcard-wrapper:hover .flashcard-face {
+  box-shadow: var(--md-elevation-3);
 }
 
 .flashcard-face.flashcard-back {
   transform: rotateY(180deg);
-  background-color: #172033;
+  background-color: #ffffff;
 }
 
-/* Card Front Elements */
+/* Card Front */
 .card-image-box {
   position: relative;
   width: 100%;
   height: 380px;
-  background-color: #0b1120;
+  background-color: #f1f5f9;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -377,10 +408,6 @@ body {
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
-}
-
-.flashcard-wrapper:hover .card-image-box img {
-  transform: scale(1.02);
 }
 
 .card-badges {
@@ -399,25 +426,25 @@ body {
   padding: 4px 10px;
   border-radius: var(--md-shape-full);
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   backdrop-filter: blur(8px);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
 .badge-tag.russia {
-  background-color: rgba(239, 68, 68, 0.85);
+  background-color: #dc2626;
   color: #ffffff;
 }
 
 .badge-tag.china {
-  background-color: rgba(217, 119, 6, 0.9);
+  background-color: #d97706;
   color: #ffffff;
 }
 
 .badge-tag.category {
-  background-color: rgba(15, 23, 42, 0.85);
-  color: #38bdf8;
-  border: 1px solid rgba(56, 189, 248, 0.4);
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--md-sys-color-primary);
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .card-front-footer {
@@ -426,16 +453,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(180deg, var(--md-sys-color-surface-container), var(--md-sys-color-surface-dim));
-}
-
-.hint-text {
-  display: flex;
-  flex-direction: column;
+  background-color: #ffffff;
 }
 
 .hint-text .title {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--md-sys-color-on-surface);
 }
@@ -443,6 +465,7 @@ body {
 .hint-text .sub {
   font-size: 0.8rem;
   color: var(--md-sys-color-on-surface-variant);
+  margin-top: 0.2rem;
 }
 
 .flip-prompt {
@@ -450,14 +473,14 @@ body {
   align-items: center;
   gap: 0.4rem;
   font-size: 0.85rem;
-  color: #38bdf8;
-  font-weight: 600;
-  padding: 6px 12px;
-  background-color: rgba(2, 132, 199, 0.15);
+  color: var(--md-sys-color-primary);
+  font-weight: 700;
+  padding: 6px 14px;
+  background-color: var(--md-sys-color-primary-container);
   border-radius: var(--md-shape-full);
 }
 
-/* Card Back Elements */
+/* Card Back */
 .card-back-content {
   flex: 1;
   padding: 1.5rem;
@@ -473,35 +496,36 @@ body {
 }
 
 .card-back-header .weapon-name {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--md-sys-color-on-surface);
   line-height: 1.2;
 }
 
 .card-back-header .weapon-sub {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
   margin-top: 0.35rem;
   font-size: 0.85rem;
-  color: #38bdf8;
-  font-weight: 500;
+  color: var(--md-sys-color-primary);
+  font-weight: 600;
 }
 
 .nato-tag {
-  background-color: rgba(56, 189, 248, 0.15);
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
   padding: 2px 8px;
   border-radius: var(--md-shape-xs);
   font-family: var(--font-mono);
   font-size: 0.75rem;
+  font-weight: 600;
 }
 
-/* Identification Point Box (最重要) */
+/* M3 Info Callout: 見た目の識別ポイント */
 .id-point-box {
-  background: linear-gradient(135deg, rgba(2, 132, 199, 0.15), rgba(15, 23, 42, 0.6));
-  border-left: 4px solid #38bdf8;
+  background-color: var(--md-sys-color-primary-container);
+  border-left: 4px solid var(--md-sys-color-primary);
   padding: 0.85rem 1rem;
   border-radius: 0 var(--md-shape-md) var(--md-shape-md) 0;
 }
@@ -510,33 +534,29 @@ body {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.825rem;
-  font-weight: 700;
-  color: #38bdf8;
-  margin-bottom: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--md-sys-color-on-primary-container);
+  margin-bottom: 0.25rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
 .id-point-box .box-desc {
   font-size: 0.9rem;
-  color: #f1f5f9;
+  color: #0c4a6e;
   line-height: 1.5;
+  font-weight: 500;
 }
 
-/* Features List */
-.features-box {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
+/* Features */
 .features-box .sec-title {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: var(--md-sys-color-on-surface-variant);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
 }
 
 .features-list {
@@ -551,32 +571,27 @@ body {
   align-items: flex-start;
   gap: 0.5rem;
   font-size: 0.875rem;
-  color: #cbd5e1;
+  color: #334155;
   line-height: 1.45;
 }
 
 .features-list li::before {
   content: "•";
-  color: #0284c7;
+  color: var(--md-sys-color-primary);
   font-weight: bold;
   font-size: 1.1rem;
   line-height: 1;
 }
 
-/* Specs Grid */
+/* Specs */
 .specs-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   gap: 0.5rem;
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: #f8fafc;
   padding: 0.75rem;
   border-radius: var(--md-shape-md);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.spec-item {
-  display: flex;
-  flex-direction: column;
+  border: 1px solid var(--md-sys-color-outline-variant);
 }
 
 .spec-key {
@@ -587,12 +602,12 @@ body {
 
 .spec-val {
   font-size: 0.85rem;
-  font-weight: 600;
-  color: #f8fafc;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
   font-family: var(--font-mono);
 }
 
-/* License Info Footer on Back */
+/* Card Back Footer */
 .card-back-footer {
   border-top: 1px solid var(--md-sys-color-outline-variant);
   padding: 0.75rem 1.5rem;
@@ -601,25 +616,23 @@ body {
   justify-content: space-between;
   font-size: 0.75rem;
   color: var(--md-sys-color-on-surface-variant);
-  background-color: rgba(11, 17, 32, 0.6);
+  background-color: #f8fafc;
 }
 
 .license-link {
-  color: #94a3b8;
+  color: var(--md-sys-color-primary);
   text-decoration: underline;
   text-underline-offset: 2px;
-}
-.license-link:hover {
-  color: #38bdf8;
+  font-weight: 600;
 }
 
-/* Action Controls (Again / Good / Easy / Prev / Next) */
+/* M3 Tonal Action Buttons */
 .flashcard-actions {
   width: 100%;
-  max-width: 680px;
+  max-width: 640px;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.85rem;
 }
 
 .rate-buttons-row {
@@ -632,11 +645,11 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 12px 18px;
+  gap: 0.4rem;
+  padding: 12px 16px;
   border-radius: var(--md-shape-lg);
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 0.925rem;
+  font-weight: 700;
   cursor: pointer;
   border: none;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -648,36 +661,30 @@ body {
 }
 
 .m3-btn.btn-again {
-  background-color: rgba(244, 63, 94, 0.15);
-  color: #fb7185;
-  border: 1px solid rgba(244, 63, 94, 0.4);
+  background-color: var(--color-again-bg);
+  color: var(--color-again-fg);
+  border: 1px solid #fecdd3;
 }
 .m3-btn.btn-again:hover {
-  background-color: var(--color-again);
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(244, 63, 94, 0.4);
+  background-color: #fecdd3;
 }
 
 .m3-btn.btn-good {
-  background-color: rgba(245, 158, 11, 0.15);
-  color: #fcd34d;
-  border: 1px solid rgba(245, 158, 11, 0.4);
+  background-color: var(--color-good-bg);
+  color: var(--color-good-fg);
+  border: 1px solid #fde68a;
 }
 .m3-btn.btn-good:hover {
-  background-color: var(--color-good);
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+  background-color: #fde68a;
 }
 
 .m3-btn.btn-easy {
-  background-color: rgba(16, 185, 129, 0.15);
-  color: #6ee7b7;
-  border: 1px solid rgba(16, 185, 129, 0.4);
+  background-color: var(--color-easy-bg);
+  color: var(--color-easy-fg);
+  border: 1px solid #a7f3d0;
 }
 .m3-btn.btn-easy:hover {
-  background-color: var(--color-easy);
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  background-color: #a7f3d0;
 }
 
 .nav-buttons-row {
@@ -689,21 +696,21 @@ body {
 .sub-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
   padding: 8px 16px;
   border-radius: var(--md-shape-full);
-  background-color: var(--md-sys-color-surface-container);
+  background-color: var(--md-sys-color-surface-bright);
   border: 1px solid var(--md-sys-color-outline-variant);
   color: var(--md-sys-color-on-surface);
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  box-shadow: var(--md-elevation-1);
 }
 
 .sub-btn:hover {
   background-color: var(--md-sys-color-surface-container-high);
-  border-color: var(--md-sys-color-outline);
 }
 
 .shortcut-guide {
@@ -714,7 +721,7 @@ body {
 }
 
 /* ==========================================================================
-   MODE 2: 4-CHOICE QUIZ (4択クイズ)
+   MODE 2: 4-CHOICE QUIZ (4択テスト)
    ========================================================================== */
 .quiz-section {
   display: flex;
@@ -726,19 +733,19 @@ body {
 
 .quiz-card {
   width: 100%;
-  max-width: 680px;
-  background-color: var(--md-sys-color-surface-container);
+  max-width: 640px;
+  background-color: var(--md-sys-color-surface-container-lowest);
   border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: var(--md-shape-xl);
   overflow: hidden;
-  box-shadow: var(--md-elevation-3);
+  box-shadow: var(--md-elevation-2);
   display: flex;
   flex-direction: column;
 }
 
 .quiz-question-header {
   padding: 1rem 1.25rem;
-  background-color: rgba(11, 17, 32, 0.5);
+  background-color: #ffffff;
   border-bottom: 1px solid var(--md-sys-color-outline-variant);
   display: flex;
   align-items: center;
@@ -749,7 +756,7 @@ body {
   position: relative;
   width: 100%;
   height: 360px;
-  background-color: #0b1120;
+  background-color: #f1f5f9;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -772,11 +779,11 @@ body {
 .quiz-option-btn {
   padding: 14px 16px;
   border-radius: var(--md-shape-lg);
-  border: 2px solid var(--md-sys-color-outline-variant);
-  background-color: var(--md-sys-color-surface);
+  border: 1.5px solid var(--md-sys-color-outline-variant);
+  background-color: var(--md-sys-color-surface-bright);
   color: var(--md-sys-color-on-surface);
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   text-align: left;
   cursor: pointer;
   transition: all 0.2s;
@@ -792,21 +799,21 @@ body {
 }
 
 .quiz-option-btn:hover:not(:disabled) {
-  border-color: #38bdf8;
-  background-color: rgba(2, 132, 199, 0.1);
-  transform: translateY(-2px);
+  border-color: var(--md-sys-color-primary);
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
 }
 
 .quiz-option-btn.correct {
-  background-color: rgba(16, 185, 129, 0.2) !important;
+  background-color: #dcfce7 !important;
   border-color: #10b981 !important;
-  color: #6ee7b7 !important;
+  color: #065f46 !important;
 }
 
 .quiz-option-btn.wrong {
-  background-color: rgba(244, 63, 94, 0.2) !important;
+  background-color: #ffe4e6 !important;
   border-color: #f43f5e !important;
-  color: #fb7185 !important;
+  color: #9f1239 !important;
 }
 
 .quiz-feedback-box {
@@ -824,13 +831,15 @@ body {
 }
 
 .quiz-feedback-box.is-correct {
-  background-color: rgba(16, 185, 129, 0.15);
-  border: 1px solid rgba(16, 185, 129, 0.4);
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
 }
 
 .quiz-feedback-box.is-wrong {
-  background-color: rgba(244, 63, 94, 0.15);
-  border: 1px solid rgba(244, 63, 94, 0.4);
+  background-color: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #9f1239;
 }
 
 .quiz-feedback-title {
@@ -838,23 +847,24 @@ body {
   align-items: center;
   gap: 0.5rem;
   font-size: 1.05rem;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .next-question-btn {
   align-self: flex-end;
-  padding: 8px 20px;
+  padding: 9px 22px;
   border-radius: var(--md-shape-full);
   background-color: var(--md-sys-color-primary);
   color: #ffffff;
   border: none;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   margin-top: 0.5rem;
+  box-shadow: var(--md-elevation-1);
 }
 
 /* ==========================================================================
-   MODE 3: GALLERY / CODEX (兵器図鑑)
+   MODE 3: GALLERY / CODEX (兵器図鑑一覧)
    ========================================================================== */
 .gallery-section {
   display: flex;
@@ -885,19 +895,20 @@ body {
 
 .m3-search-input {
   width: 100%;
-  padding: 10px 14px 10px 42px;
-  background-color: var(--md-sys-color-surface-container);
+  padding: 11px 14px 11px 44px;
+  background-color: var(--md-sys-color-surface-bright);
   border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: var(--md-shape-full);
-  color: #ffffff;
+  color: var(--md-sys-color-on-surface);
   font-size: 0.9rem;
   outline: none;
   transition: all 0.2s;
+  box-shadow: var(--md-elevation-1);
 }
 
 .m3-search-input:focus {
-  border-color: #38bdf8;
-  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2);
+  border-color: var(--md-sys-color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 99, 155, 0.15);
 }
 
 .gallery-grid {
@@ -907,7 +918,7 @@ body {
 }
 
 .gallery-card {
-  background-color: var(--md-sys-color-surface-container);
+  background-color: var(--md-sys-color-surface-bright);
   border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: var(--md-shape-lg);
   overflow: hidden;
@@ -919,8 +930,8 @@ body {
 }
 
 .gallery-card:hover {
-  transform: translateY(-4px);
-  border-color: #38bdf8;
+  transform: translateY(-3px);
+  border-color: #93c5fd;
   box-shadow: var(--md-elevation-3);
 }
 
@@ -928,7 +939,7 @@ body {
   position: relative;
   width: 100%;
   height: 180px;
-  background-color: #0b1120;
+  background-color: #f1f5f9;
   overflow: hidden;
 }
 
@@ -940,35 +951,36 @@ body {
 }
 
 .gallery-card:hover .gallery-card-img img {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
 .gallery-card-body {
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.4rem;
   flex: 1;
 }
 
 .gallery-card-title {
   font-size: 1.05rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--md-sys-color-on-surface);
 }
 
 .gallery-card-sub {
   font-size: 0.8rem;
-  color: #38bdf8;
+  color: var(--md-sys-color-primary);
   display: flex;
   align-items: center;
   gap: 0.4rem;
+  font-weight: 600;
 }
 
 .gallery-card-desc {
   font-size: 0.8rem;
   color: var(--md-sys-color-on-surface-variant);
-  line-height: 1.4;
+  line-height: 1.45;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -982,15 +994,15 @@ body {
   width: 10px;
   height: 10px;
   border-radius: var(--md-shape-full);
-  box-shadow: 0 0 6px rgba(0,0,0,0.8);
+  box-shadow: 0 0 4px rgba(0,0,0,0.3);
 }
-.gallery-status-indicator.unseen { background-color: #64748b; }
+.gallery-status-indicator.unseen { background-color: #94a3b8; }
 .gallery-status-indicator.learning { background-color: #f43f5e; }
 .gallery-status-indicator.reviewing { background-color: #f59e0b; }
 .gallery-status-indicator.mastered { background-color: #10b981; }
 
 /* ==========================================================================
-   MODE 4: STATS & DASHBOARD (学習進捗)
+   MODE 4: STATS & DASHBOARD (学習進捗・統計)
    ========================================================================== */
 .stats-section {
   display: flex;
@@ -1006,13 +1018,14 @@ body {
 }
 
 .stat-card {
-  background-color: var(--md-sys-color-surface-container);
+  background-color: var(--md-sys-color-surface-bright);
   border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: var(--md-shape-lg);
   padding: 1.25rem;
   display: flex;
   align-items: center;
   gap: 1rem;
+  box-shadow: var(--md-elevation-1);
 }
 
 .stat-icon {
@@ -1022,8 +1035,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(2, 132, 199, 0.15);
-  color: #38bdf8;
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-primary);
 }
 
 .stat-data {
@@ -1032,7 +1045,8 @@ body {
 }
 
 .stat-data .label {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
+  font-weight: 600;
   color: var(--md-sys-color-on-surface-variant);
 }
 
@@ -1040,17 +1054,18 @@ body {
   font-size: 1.6rem;
   font-weight: 800;
   font-family: var(--font-mono);
-  color: #ffffff;
+  color: var(--md-sys-color-on-surface);
 }
 
 .progress-breakdown-card {
-  background-color: var(--md-sys-color-surface-container);
+  background-color: var(--md-sys-color-surface-bright);
   border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: var(--md-shape-xl);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  box-shadow: var(--md-elevation-1);
 }
 
 .breakdown-row {
@@ -1065,30 +1080,31 @@ body {
   justify-content: space-between;
   font-size: 0.85rem;
   font-weight: 600;
+  color: var(--md-sys-color-on-surface);
 }
 
 .m3-progress-track {
-  height: 10px;
-  background-color: rgba(255, 255, 255, 0.08);
+  height: 8px;
+  background-color: #f1f5f9;
   border-radius: var(--md-shape-full);
   overflow: hidden;
 }
 
 .m3-progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, #0284c7, #38bdf8);
+  background-color: var(--md-sys-color-primary);
   border-radius: var(--md-shape-full);
   transition: width 0.4s ease;
 }
 
 /* ==========================================================================
-   MODAL DIALOG (兵器詳細ポップアップ)
+   MODAL DIALOG (M3 White Popup)
    ========================================================================== */
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
   z-index: 100;
   display: none;
   align-items: center;
@@ -1103,10 +1119,10 @@ body {
 
 .m3-modal {
   width: 100%;
-  max-width: 760px;
+  max-width: 680px;
   max-height: 90vh;
-  background-color: #172033;
-  border: 1px solid var(--md-sys-color-outline);
+  background-color: #ffffff;
+  border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: var(--md-shape-xl);
   box-shadow: var(--md-elevation-4);
   overflow-y: auto;
@@ -1123,32 +1139,31 @@ body {
   width: 36px;
   height: 36px;
   border-radius: var(--md-shape-full);
-  background-color: rgba(15, 23, 42, 0.8);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--md-sys-color-on-surface);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s;
+  box-shadow: var(--md-elevation-1);
 }
 
 .modal-close-btn:hover {
-  background-color: #ef4444;
-  border-color: #ef4444;
+  background-color: #fee2e2;
+  color: #dc2626;
 }
 
-/* Animation */
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.98); }
   to { opacity: 1; transform: scale(1); }
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .top-app-bar {
     flex-wrap: wrap;
-    padding: 0.5rem 0.75rem;
+    padding: 0.6rem 0.75rem;
   }
   .nav-tabs {
     order: 3;
@@ -1157,7 +1172,7 @@ body {
   }
   .nav-tab-btn {
     padding: 6px 10px;
-    font-size: 0.75rem;
+    font-size: 0.78rem;
   }
   .flashcard-wrapper {
     height: 480px;

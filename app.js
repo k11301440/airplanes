@@ -220,7 +220,7 @@
     // Front View
     cardFrontImg.src = w.image_url || '';
     cardFrontImg.onerror = function () {
-      this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="%231e293b"/><text x="50%" y="50%" fill="%2394a3b8" font-size="16" text-anchor="middle" dominant-baseline="middle">画像読み込み中 / 未取得</text></svg>';
+      this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="%23f1f5f9"/><text x="50%" y="50%" fill="%2364748b" font-size="16" font-family="sans-serif" text-anchor="middle" dominant-baseline="middle">画像読み込み中 / 未取得</text></svg>';
     };
 
     frontCountryBadge.textContent = w.country_label;
@@ -371,7 +371,7 @@
 
     quizFeedbackAppearance.innerHTML = `
       <strong>見た目の識別ポイント:</strong> ${quizCurrentWeapon.appearance}<br>
-      <span style="font-size:0.8rem; color:#94a3b8;">${quizCurrentWeapon.features?.[0] || ''}</span>
+      <span style="font-size:0.8rem; color:var(--md-sys-color-on-surface-variant);">${quizCurrentWeapon.features?.[0] || ''}</span>
     `;
 
     // 選択肢ボタンを無効化
@@ -393,7 +393,7 @@
     });
 
     if (items.length === 0) {
-      galleryGrid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding:3rem; color:#94a3b8;">該当する兵器が見つかりませんでした。</div>';
+      galleryGrid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding:3rem; color:var(--md-sys-color-on-surface-variant);">該当する兵器が見つかりませんでした。</div>';
       return;
     }
 
